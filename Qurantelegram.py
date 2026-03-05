@@ -9,9 +9,9 @@ from telegram import InlineQueryResultAudio
 from telegram.ext import InlineQueryHandler
 
 
-ADMIN_ID = 5822683177
+TOKEN = os.getenv('BOT_TOKEN')
+ADMIN_ID = os.getenv('ADMIN_ID')
 
-TOKEN = "8059544045:AAHclNFACBK-ZHfAblxOxy8UduM6i4Xvd9o"
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
