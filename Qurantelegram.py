@@ -8,10 +8,8 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, Callb
 from telegram import InlineQueryResultAudio
 from telegram.ext import InlineQueryHandler
 
-
 TOKEN = os.getenv('BOT_TOKEN')
 ADMIN_ID = os.getenv('ADMIN_ID')
-
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
@@ -630,29 +628,220 @@ async def start_bander(update, context):
         text="ختمة الشيخ بندر بليلة - اختر السورة:",
         reply_markup=markup
     )
-                                                                                                                                                       async def change_bander_page(update, context):                                                                                                             query = update.callback_query                                                                                                                          await query.answer()
-    page = int(query.data.split("_")[1])                                                                                                                   markup = await create_bander_keyboard(page=page)                                                                                                       await query.edit_message_text(                                                                                                                             text=f"ختمة الشيخ بندر بليلة - صفحة {page + 1}",                                                                                                       reply_markup=markup
-    )                                                                                                                                                                                                                                                                                                         async def play_surah_bander(update, context):                                                                                                              query = update.callback_query                                                                                                                          await query.answer()
-                                                                                                                                                           index = int(query.data.split("_")[1])                                                                                                                  data = load_quran_data()                                                                                                                               bander_list = data.get('reciters', {}).get('bander_balela', [])                                                                                                                                                                                                                                               if index < len(bander_list):                                                                                                                               surah_item = bander_list[index]                                                                                                                        audio_id = surah_item.get('audio_id')                                                                                                                  surah_name = surah_item.get('surah', 'غير معروف')                                                                                                                                                                                                                                                             try:                                                                                                                                                       await context.bot.send_audio(                                                                                                                              chat_id=query.message.chat_id,                                                                                                                         audio=audio_id,                                                                                                                                        caption=f"🎙️ سورة {surah_name} تلاوة الشيخ بندر بليلة\n\n@SBT1bot"                                                                                  )
-        except Exception as e:                                                                                                                                     await query.message.reply_text(f"❌ خطأ في الإرسال: {e}")                                                                                                                                                                                                                                                                                                                                                                                                async def start_mashare(update, context):
-    query = update.callback_query                                                                                                                          await query.answer()                                                                                                                                   markup = await create_mashare_keyboard(page=0)                                                                                                         await query.edit_message_text(                                                                                                                             text="ختمة الشيخ مشاري راشد العفاسي - اختر السورة:",                                                                                                   reply_markup=markup                                                                                                                                )                                                                                                                                                                                                                                                                                                         async def change_mashare_page(update, context):                                                                                                            query = update.callback_query                                                                                                                          await query.answer()                                                                                                                                   page = int(query.data.split("_")[1])                                                                                                                   markup = await create_mashare_keyboard(page=page)                                                                                                      await query.edit_message_text(                                                                                                                             text=f"ختمة الشيخ بندر بليلة - صفحة {page + 1}",                                                                                                       reply_markup=markup                                                                                                                                )                                                                                                                                                                                                                                                                                                         async def play_surah_mashare(update, context):                                                                                                             query = update.callback_query                                                                                                                          await query.answer()
 
-    index = int(query.data.split("_")[1])                                                                                                                  data = load_quran_data()                                                                                                                               mashare_list = data.get('reciters', {}).get('mashare_rashed', [])                                                                                                                                                                                                                                             if index < len(mashare_list):                                                                                                                              surah_item = mashare_list[index]                                                                                                                       audio_id = surah_item.get('audio_id')                                                                                                                  surah_name = surah_item.get('surah', 'غير معروف')                                                                                                                                                                                                                                                             try:                                                                                                                                                       await context.bot.send_audio(                                                                                                                              chat_id=query.message.chat_id,                                                                                                                         audio=audio_id,                                                                                                                                        caption=f"🎙️ سورة {surah_name} تلاوة الشيخ مشاري راشد العفاسي\n\n@SBT1bot"                                                                          )                                                                                                                                                  except Exception as e:                                                                                                                                     await query.message.reply_text(f"❌ خطأ في الإرسال: {e}")
-                                                                                                                                                                                                                                                                                                              async def start_badder(update, context):
+async def change_bander_page(update, context):
     query = update.callback_query
-    await query.answer()                                                                                                                                   markup = await create_badder_keyboard(page=0)                                                                                                          await query.edit_message_text(                                                                                                                             text="ختمة الشيخ بدر التركي - اختر السورة:",                                                                                                           reply_markup=markup                                                                                                                                )                                                                                                                                                                                                                                                                                                         async def change_badder_page(update, context):                                                                                                             query = update.callback_query                                                                                                                          await query.answer()                                                                                                                                   page = int(query.data.split("_")[1])                                                                                                                   markup = await create_badder_keyboard(page=page)                                                                                                       await query.edit_message_text(                                                                                                                             text=f"ختمة الشيخ بدر التركي - صفحة {page + 1}",                                                                                                       reply_markup=markup                                                                                                                                )                                                                                                                                                                                                                                                                                                         async def play_surah_badder(update, context):                                                                                                              query = update.callback_query                                                                                                                          await query.answer()                                                                                                                                                                                                                                                                                          index = int(query.data.split("_")[1])
-    data = load_quran_data()                                                                                                                               badder_list = data.get('reciters', {}).get('badder_turke', [])                                                                                                                                                                                                                                                if index < len(badder_list):                                                                                                                               surah_item = badder_list[index]                                                                                                                        audio_id = surah_item.get('audio_id')                                                                                                                  surah_name = surah_item.get('surah', 'غير معروف')                                                                                                                                                                                                                                                             try:                                                                                                                                                       await context.bot.send_audio(                                                                                                                              chat_id=query.message.chat_id,                                                                                                                         audio=audio_id,                                                                                                                                        caption=f"🎙️ سورة {surah_name} تلاوة الشيخ بدر التركي\n\n@SBT1bot"                                                                                  )                                                                                                                                                  except Exception as e:                                                                                                                                     await query.message.reply_text(f"❌ خطأ في الإرسال: {e}")
-                                                                                                                                                                                                                                                                                                              async def get_id(update: Update, context: ContextTypes.DEFAULT_TYPE):                                                                                      if update.message.document:                                                                                                                                f_id = update.message.document.file_id
-        text = f"✅ تم استخراج ID الملف:\n\n`{f_id}`"                                                                                                      elif update.message.audio:                                                                                                                                 f_id = update.message.audio.file_id                                                                                                                    text = f"✅ تم استخراج ID ملف الصوت:\n\n`{f_id}`"                                                                                                  else:
-        return                                                                                                                                                                                                                                                                                                    await update.message.reply_text(text, parse_mode='Markdown')                                                                                                                                                                                                                                              async def search_files(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_query = clean_text(update.message.text)                                                                                                           all_data = load_quran_data()                                                                                                                           found_results = []                                                                                                                                                                                                                                                                                            reciters_data = all_data.get("reciters", {})
-    for r_key, surahs in reciters_data.items():                                                                                                                for surah in surahs:                                                                                                                                       s_name = clean_text(surah.get('surah', ''))                                                                                                            r_name = clean_text(surah.get('reciter', ''))                                                                                                          search_pool = f"{s_name} {r_name}"                                                                                                                                                                                                                                                                            if all(word in search_pool for word in user_query.split()):                                                                                                found_results.append(surah)                                                                                                                                                                                                                                                                       if found_results:                                                                                                                                          await update.message.reply_text(f"🔍 تم العثور على {len(found_results)} نتيجة:")                                                                       for res in found_results[:10]:                                                                                                                             try:                                                                                                                                                       await update.message.reply_audio(                                                                                                                          audio=res['audio_id'].strip(),                                                                                                                         caption=f"📖 سورة: {res['surah']}\n👤 القارئ: {res['reciter']}\n\n@SBT1bot"
-                )                                                                                                                                                  except Exception as e:                                                                                                                                     continue                                                                                                                                   else:                                                                                                                                                      await update.message.reply_text("❌ لم أجد سورة بهذا الاسم أو القارئ. جرب مثلاً: 'البقرة المنشاوي'")
-                                                                                                                                                                                                                                                                                                              async def handle_surah_search(update, context):                                                                                                            query = update.callback_query                                                                                                                          surah_name = query.data.split("_")[1]
-    await query.answer(f"🔍 جاري البحث عن سورة {surah_name}...")                                                                                                                                                                                                                                                  data = load_quran_data()                                                                                                                               reciters = data.get('reciters', {})                                                                                                                    found_any = False
-                                                                                                                                                           for reciter_id, surahs in reciters.items():                                                                                                                for item in surahs:                                                                                                                                        if item.get('surah') == surah_name:                                                                                                                        found_any = True
-                audio_id = item.get('audio_id')                                                                                                                                                                                                                                                                               reciter_display_name = item.get('reciter', reciter_id.replace('_', ' ').title())                                                                                                                                                                                                                              try:                                                                                                                                                       await context.bot.send_audio(                                                                                                                              chat_id=query.message.chat_id,                                                                                                                         audio=audio_id,                                                                                                                                        caption=f"📖 سورة: {surah_name}\n🎙️ تلاوة الشيخ: {reciter_display_name}"                                                                            )                                                                                                                                                  except Exception as e:                                                                                                                                     print(f"❌ خطأ أثناء إرسال ملف: {e}")                                                                                                                                                                                                                                                         if not found_any:                                                                                                                                          await query.message.reply_text(f"لم يتم العثور على لسورة {surah_name}.")                                                                       
-                                                                                                                                                                                                                                                                                                              if __name__ == '__main__':                                                                                                                                 app = ApplicationBuilder().token(TOKEN).build()                                                                                                    
-    app.add_handler(CommandHandler("start", start))                                                                                                        app.add_handler(CommandHandler("stats", stats))                                                                                                        app.add_handler(CommandHandler("bc", broadcast))                                                                                                       app.add_handler(CommandHandler("reload", reload_config))                                                                                           
-    app.add_handler(CallbackQueryHandler(start_maher, pattern="^mahert$"))                                                                                 app.add_handler(CallbackQueryHandler(change_maher_page, pattern="^maherpage_"))                                                                        app.add_handler(CallbackQueryHandler(play_surah, pattern="^playmaher_"))                                                                               app.add_handler(CallbackQueryHandler(start_yaser, pattern="^yasert$"))                                                                                 app.add_handler(CallbackQueryHandler(change_yaser_page, pattern="^yaserpage_"))
-    app.add_handler(CallbackQueryHandler(play_surah_yaser, pattern="^playyaser_"))                                                                         app.add_handler(CallbackQueryHandler(start_bander, pattern="^bandert$"))                                                                               app.add_handler(CallbackQueryHandler(change_bander_page, pattern="^banderpage_"))                                                                      app.add_handler(CallbackQueryHandler(play_surah_bander, pattern="^playbander_"))                                                                       app.add_handler(CallbackQueryHandler(start_mashare, pattern="^masharet$"))                                                                             app.add_handler(CallbackQueryHandler(change_mashare_page, pattern="^masharepage_"))                                                                    app.add_handler(CallbackQueryHandler(play_surah_mashare, pattern="^playmashare_"))                                                                     app.add_handler(CallbackQueryHandler(start_badder, pattern="^badert$"))                                                                                app.add_handler(CallbackQueryHandler(change_badder_page, pattern="^badderpage_"))                                                                      app.add_handler(CallbackQueryHandler(play_surah_badder, pattern="^playbadder_"))                                                                       app.add_handler(CallbackQueryHandler(handle_surah_search, pattern="^search_"))                                                                         app.add_handler(CallbackQueryHandler(change_index_page, pattern="^idxpage_"))                                                                          app.add_handler(CallbackQueryHandler(handle_callback))                                                                                                 app.add_handler(InlineQueryHandler(inline_query))                                                                                                      app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, search_files))                                                                         app.add_handler(CommandHandler("reload", reload_config))                                                                                               app.add_handler(MessageHandler(filters.AUDIO | filters.Document.PDF, get_id))                                                                                                                                                                                                                                 print("🚀 البوت يعمل الآن بنجاح...")                                                                                                                   app.run_polling()
+    await query.answer()
+    page = int(query.data.split("_")[1])
+    markup = await create_bander_keyboard(page=page)
+    await query.edit_message_text(
+        text=f"ختمة الشيخ بندر بليلة - صفحة {page + 1}",
+        reply_markup=markup
+    )                                                                                                                                                                                                                                                                                                         async def play_surah_bander(update, context):                                                                                                              query = update.callback_query
+    await query.answer()
+
+    index = int(query.data.split("_")[1])
+    data = load_quran_data()
+    bander_list = data.get('reciters', {}).get('bander_balela', [])
+
+    if index < len(bander_list):
+        surah_item = bander_list[index]
+        audio_id = surah_item.get('audio_id')
+        surah_name = surah_item.get('surah', 'غير معروف')
+
+        try:
+            await context.bot.send_audio(
+                chat_id=query.message.chat_id,
+                audio=audio_id,
+                caption=f"🎙️ سورة {surah_name} تلاوة الشيخ بندر بليلة\n\n@SBT1bot"
+            )
+        except Exception as e:
+            await query.message.reply_text(f"❌ خطأ في الإرسال: {e}")
+
+
+async def start_mashare(update, context):
+    query = update.callback_query
+    await query.answer()
+    markup = await create_mashare_keyboard(page=0)
+    await query.edit_message_text(
+        text="ختمة الشيخ مشاري راشد العفاسي - اختر السورة:",
+        reply_markup=markup
+    )
+
+async def change_mashare_page(update, context):
+    query = update.callback_query
+    await query.answer()
+    page = int(query.data.split("_")[1])
+    markup = await create_mashare_keyboard(page=page)
+    await query.edit_message_text(
+        text=f"ختمة الشيخ بندر بليلة - صفحة {page + 1}",
+        reply_markup=markup
+    )
+
+async def play_surah_mashare(update, context):
+    query = update.callback_query
+    await query.answer()
+
+    index = int(query.data.split("_")[1])
+    data = load_quran_data()
+    mashare_list = data.get('reciters', {}).get('mashare_rashed', [])
+
+    if index < len(mashare_list):
+        surah_item = mashare_list[index]
+        audio_id = surah_item.get('audio_id')
+        surah_name = surah_item.get('surah', 'غير معروف')
+
+        try:
+            await context.bot.send_audio(
+                chat_id=query.message.chat_id,
+                audio=audio_id,
+                caption=f"🎙️ سورة {surah_name} تلاوة الشيخ مشاري راشد العفاسي\n\n@SBT1bot"
+            )
+        except Exception as e:
+            await query.message.reply_text(f"❌ خطأ في الإرسال: {e}")
+
+
+async def start_badder(update, context):
+    query = update.callback_query
+    await query.answer()
+    markup = await create_badder_keyboard(page=0)
+    await query.edit_message_text(
+        text="ختمة الشيخ بدر التركي - اختر السورة:",
+        reply_markup=markup
+    )
+
+async def change_badder_page(update, context):
+    query = update.callback_query
+    await query.answer()
+    page = int(query.data.split("_")[1])
+    markup = await create_badder_keyboard(page=page)
+    await query.edit_message_text(
+        text=f"ختمة الشيخ بدر التركي - صفحة {page + 1}",
+        reply_markup=markup
+    )
+
+async def play_surah_badder(update, context):
+    query = update.callback_query
+    await query.answer()
+
+    index = int(query.data.split("_")[1])
+    data = load_quran_data()
+    badder_list = data.get('reciters', {}).get('badder_turke', [])
+
+    if index < len(badder_list):
+        surah_item = badder_list[index]
+        audio_id = surah_item.get('audio_id')
+        surah_name = surah_item.get('surah', 'غير معروف')
+
+        try:
+            await context.bot.send_audio(
+                chat_id=query.message.chat_id,
+                audio=audio_id,
+                caption=f"🎙️ سورة {surah_name} تلاوة الشيخ بدر التركي\n\n@SBT1bot"
+            )
+        except Exception as e:
+            await query.message.reply_text(f"❌ خطأ في الإرسال: {e}")
+
+
+async def get_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message.document:
+        f_id = update.message.document.file_id
+        text = f"✅ تم استخراج ID الملف:\n\n`{f_id}`"
+    elif update.message.audio:
+        f_id = update.message.audio.file_id
+        text = f"✅ تم استخراج ID ملف الصوت:\n\n`{f_id}`"
+    else:
+        return
+
+    await update.message.reply_text(text, parse_mode='Markdown')
+
+async def search_files(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_query = clean_text(update.message.text)
+    all_data = load_quran_data()
+    found_results = []
+
+    reciters_data = all_data.get("reciters", {})
+    for r_key, surahs in reciters_data.items():
+        for surah in surahs:
+            s_name = clean_text(surah.get('surah', ''))
+            r_name = clean_text(surah.get('reciter', ''))
+            search_pool = f"{s_name} {r_name}"
+
+            if all(word in search_pool for word in user_query.split()):
+                found_results.append(surah)
+
+    if found_results:
+        await update.message.reply_text(f"🔍 تم العثور على {len(found_results)} نتيجة:")
+        for res in found_results[:10]:
+            try:
+                await update.message.reply_audio(
+                    audio=res['audio_id'].strip(),
+                    caption=f"📖 سورة: {res['surah']}\n👤 القارئ: {res['reciter']}\n\n@SBT1bot"
+                )
+            except Exception as e:
+                continue
+    else:
+        await update.message.reply_text("❌ لم أجد سورة بهذا الاسم أو القارئ. جرب مثلاً: 'البقرة المنشاوي'")
+
+
+async def handle_surah_search(update, context):                                                                                                            query = update.callback_query
+    surah_name = query.data.split("_")[1]
+    await query.answer(f"🔍 جاري البحث عن سورة {surah_name}...")
+
+    data = load_quran_data()
+    reciters = data.get('reciters', {})
+    found_any = False
+
+    for reciter_id, surahs in reciters.items():
+        for item in surahs:
+            if item.get('surah') == surah_name:
+                found_any = True
+                audio_id = item.get('audio_id')
+
+                reciter_display_name = item.get('reciter', reciter_id.replace('_', ' ').title())
+
+                try:
+                    await context.bot.send_audio(
+                        chat_id=query.message.chat_id,
+                        audio=audio_id,                                                                                                                                        caption=f"📖 سورة: {surah_name}\n🎙️ تلاوة الشيخ: {reciter_display_name}"                                                                            )
+                except Exception as e:
+                    print(f"❌ خطأ أثناء إرسال ملف: {e}")
+
+    if not found_any:
+        await query.message.reply_text(f"لم يتم العثور على لسورة {surah_name}.")
+
+
+
+if __name__ == '__main__':
+    app = ApplicationBuilder().token(TOKEN).build()
+
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("stats", stats))
+    app.add_handler(CommandHandler("bc", broadcast))
+    app.add_handler(CommandHandler("reload", reload_config))
+
+    app.add_handler(CallbackQueryHandler(start_maher, pattern="^mahert$"))
+    app.add_handler(CallbackQueryHandler(change_maher_page, pattern="^maherpage_"))
+    app.add_handler(CallbackQueryHandler(play_surah, pattern="^playmaher_"))
+    app.add_handler(CallbackQueryHandler(start_yaser, pattern="^yasert$"))
+    app.add_handler(CallbackQueryHandler(change_yaser_page, pattern="^yaserpage_"))
+    app.add_handler(CallbackQueryHandler(play_surah_yaser, pattern="^playyaser_"))
+    app.add_handler(CallbackQueryHandler(start_bander, pattern="^bandert$"))
+    app.add_handler(CallbackQueryHandler(change_bander_page, pattern="^banderpage_"))
+    app.add_handler(CallbackQueryHandler(play_surah_bander, pattern="^playbander_"))
+    app.add_handler(CallbackQueryHandler(start_mashare, pattern="^masharet$"))
+    app.add_handler(CallbackQueryHandler(change_mashare_page, pattern="^masharepage_"))
+    app.add_handler(CallbackQueryHandler(play_surah_mashare, pattern="^playmashare_"))
+    app.add_handler(CallbackQueryHandler(start_badder, pattern="^badert$"))
+    app.add_handler(CallbackQueryHandler(change_badder_page, pattern="^badderpage_"))
+    app.add_handler(CallbackQueryHandler(play_surah_badder, pattern="^playbadder_"))
+    app.add_handler(CallbackQueryHandler(handle_surah_search, pattern="^search_"))
+    app.add_handler(CallbackQueryHandler(change_index_page, pattern="^idxpage_"))
+    app.add_handler(CallbackQueryHandler(handle_callback))
+    app.add_handler(InlineQueryHandler(inline_query))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, search_files))
+    app.add_handler(CommandHandler("reload", reload_config))
+    app.add_handler(MessageHandler(filters.AUDIO | filters.Document.PDF, get_id))
+
+    print("🚀 البوت يعمل الآن بنجاح...")
+    app.run_polling()
